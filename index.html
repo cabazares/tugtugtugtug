@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html ng-app="tugtugtugtug">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF8" />
+    <title>tugtugtugtug</title>
+    <script type="text/javascript"
+        src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>
+    <script type="text/javascript" src="js/jquery.jplayer.min.js"></script>
+    <script type="text/javascript" src="js/tugtugtugtug.js"></script>
+</head>
+<body ng-controller="MainCtrl">
+    <!-- audio player element -->
+    <div id="audioPlayer" class="tug-audio-player"></div>
+
+    <!-- current artist info -->
+    <div class="currentSongArtist">{{currentTrack.artist}}</div>
+
+    <!-- track controls -->
+    <div class="playerControlsBox">
+        <a ng-hide="isPlaying" ng-click="playTrack()"  href="#">Play</a>
+        <a ng-show="isPlaying" ng-click="pauseTrack()" href="#">Pause</a>
+    </div>
+
+    <!-- current track info -->
+    <div class="currentSongBox">
+        <div class="currentSongName">{{currentTrack.title}}</div>
+    </div>
+
+    <!-- prev/next buttons -->
+    <div>
+        <a class="prevTrack" ng-click="loadPrevTrack()" href="#">&lt;</a>
+        <a class="nextTrack" ng-click="loadNextTrack()" href="#">&gt;</a>
+    </div>
+
+    <!-- general content-->
+    <ng-view></ng-view>
+</body>
+</html>
