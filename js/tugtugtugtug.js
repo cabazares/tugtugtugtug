@@ -6,11 +6,13 @@ var tug = angular.module('tugtugtugtug', []).run(function($rootScope) {
     $rootScope.tracks = [{
         "artist": "TSP",
         "title": "Cro Magnon Man",
-        "url": "http://www.jplayer.org/audio/mp3/TSP-01-Cro_magnon_man.mp3"
+        "url": "http://www.jplayer.org/audio/mp3/TSP-01-Cro_magnon_man.mp3",
+        "image": "/images/bg1.jpg"
     },{
         "artist": "Miaow",
         "title": "The Separation",
-        "url": "http://www.jplayer.org/audio/mp3/Miaow-05-The-separation.mp3"
+        "url": "http://www.jplayer.org/audio/mp3/Miaow-05-The-separation.mp3",
+        "image": "/images/bg2.jpg"
     }];
 });
 
@@ -93,12 +95,13 @@ tug.directive('tugAudioPlayer', function ($rootScope) {
                     $scope.$apply();
                 },
                 ended: function(event) {
-                    // TODO: play next song
+                    // play next song
+                    $scope.loadNextTrack();
                 },
-                swfPath: "js",
-                cssSelectorAncestor: ".playerControlsBox",
-                supplied: "mp3",
-                wmode: "window"
+                swfPath: 'js',
+                cssSelectorAncestor: '.playerControlsBox',
+                supplied: 'mp3',
+                wmode: 'window'
             });
 
             $rootScope.$on('trackLoad', function(event, track) {
@@ -119,12 +122,49 @@ tug.directive('tugAudioPlayer', function ($rootScope) {
 
             // play/resume player
             $rootScope.$on('trackPlay', function(event, time) {
-                player.jPlayer("play", time);
+                player.jPlayer('play', time);
             });
 
             // pause player
             $rootScope.$on('trackPause', function(event, time) {
-                player.jPlayer("pause", time);
+                player.jPlayer('pause', time);
+            });
+        }
+    };
+});
+
+
+tug.directive('tugBackgroundImage', function ($rootScope) {
+    return {
+        restrict: 'C',
+        link: function ($scope, element, attr) {
+            var bgElem = element.find("#backgroundImage");
+            // on track load
+            $rootScope.$on('trackLoaded', function(event, track) {
+                bgElem.css({
+                    'background-image': 'url(\'' + track.image + '\')'
+                })
+            });
+        }
+    };
+});
+
+
+tug.directive('tugCurrentSongArtist', function ($rootScope) {
+    return {
+        restrict: 'C',
+        link: function ($scope, element, attr) {
+            // on track load
+            $rootScope.$on('trackLoaded', function(event, track) {
+                element.animate({
+                    "margin-top": -1 * (element.height() * 4)
+                }, {
+                    complete: function () {
+                        element.animate({
+                            "margin-top": 0
+                        })
+                    }
+                })
             });
         }
     };

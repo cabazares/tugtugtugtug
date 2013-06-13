@@ -1,3 +1,124 @@
 html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
     font-family: 'Pontano Sans', sans, sans-serif;
 }
+
+body {
+    background-color: black;
+    color: white;
+}
+
+#backgroundWrapper {
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
+    margin: 0px 0 60px 0;
+}
+
+#backgroundImage {
+    width:100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-position: center center;
+}
+
+#stripesOverlay {
+    width:100%;
+    height: 100%;
+    background-image: url('/images/diagonal_lines_pattern.png');
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#mainWrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.playerControlsBox {
+    position: absolute;
+    bottom: 10px;
+    left: 20px;
+}
+
+.controlButton {
+    background-image: url(http://tugtugtugtug.localhost/images/controls.png);
+    background-repeat: no-repeat;
+    width: 37px;
+    height: 37px;
+    display: block;
+}
+
+.controlButton.playButton {
+    background-position: -44px 0px;
+}
+
+.currentSongBox {
+    position: absolute;
+    bottom: 0px;
+    text-align: center;
+    width: 100%;
+    height: 60px;
+    vertical-align: middle;
+    font-size: 22pt;
+    line-height: 60px;
+}
+
+.currentSongArtist {
+    min-width: 220px;
+    background-color: black;
+    position: absolute;
+    padding: 20px 20px 10px 20px;
+    font-size: 14pt;
+    font-weight: bold;
+    left: 60px;
+}
+
+
+.prevNextButton {
+    width: 32px;
+    height: 200px;
+    display: block;
+    text-decoration: none;
+    font-size: 22pt;
+    font-weight: bold;
+    color: white;
+    background-color: black;
+    text-align: center;
+    line-height: 200px;
+    padding: 4px;
+    position: absolute;
+    top: 50%;
+    margin-top: -140px;
+    opacity: 0.2;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.prevNextButton.nextTrack {
+    right: 0px;
+}
+
+.prevNextButton.prevTrack {
+    left: 0px;
+}
+

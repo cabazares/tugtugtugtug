@@ -9,35 +9,45 @@
     <link href="css/style.css" rel="stylesheet" type="text/css">
     <script type="text/javascript"
         src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.1.4/angular.min.js"></script>
     <script type="text/javascript" src="js/jquery.jplayer.min.js"></script>
     <script type="text/javascript" src="js/tugtugtugtug.js"></script>
 </head>
 <body ng-controller="MainCtrl">
-    <!-- audio player element -->
-    <div id="audioPlayer" class="tug-audio-player"></div>
-
-    <!-- current artist info -->
-    <div class="currentSongArtist">{{currentTrack.artist}}</div>
-
-    <!-- track controls -->
-    <div class="playerControlsBox">
-        <a ng-hide="isPlaying" ng-click="playTrack()"  href="#">Play</a>
-        <a ng-show="isPlaying" ng-click="pauseTrack()" href="#">Pause</a>
+    <div id="backgroundWrapper" class="tug-background-image">
+        <div id="backgroundImage"></div>
+        <div id="stripesOverlay"></div>
     </div>
+    <div id="mainWrapper">
+        <!-- audio player element -->
+        <div id="audioPlayer" class="tug-audio-player"></div>
 
-    <!-- current track info -->
-    <div class="currentSongBox">
-        <div class="currentSongName">{{currentTrack.title}}</div>
+        <!-- current artist info -->
+        <div class="currentSongArtist tug-current-song-artist">
+            {{currentTrack.artist}}
+        </div>
+
+        <!-- current track info -->
+        <div class="currentSongBox">
+            <div class="currentSongName">{{currentTrack.title}}</div>
+        </div>
+
+        <!-- prev/next buttons -->
+        <a class="prevTrack prevNextButton"
+            ng-click="loadPrevTrack()" href="#">◄</a>
+        <a class="nextTrack prevNextButton"
+             ng-click="loadNextTrack()" href="#">►</a>
+
+        <!-- track controls -->
+        <div class="playerControlsBox">
+            <a ng-hide="isPlaying" class="controlButton playButton"
+                ng-click="playTrack()"  href="#"></a>
+            <a ng-show="isPlaying" class="controlButton"
+                ng-click="pauseTrack()" href="#"></a>
+        </div>
+
+        <!-- general content-->
+        <ng-view></ng-view>
     </div>
-
-    <!-- prev/next buttons -->
-    <div>
-        <a class="prevTrack" ng-click="loadPrevTrack()" href="#">&lt;</a>
-        <a class="nextTrack" ng-click="loadNextTrack()" href="#">&gt;</a>
-    </div>
-
-    <!-- general content-->
-    <ng-view></ng-view>
 </body>
 </html>
