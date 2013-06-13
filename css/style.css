@@ -122,3 +122,31 @@ body {
     left: 0px;
 }
 
+.eventsListBox {
+    min-width: 180px;
+    background-color: black;
+    position: absolute;
+    padding: 8px 10px 5px 10px;
+    font-size: 10pt;
+    font-weight: bold;
+    right: 60px;
+}
+
+.eventsListBox a {
+    text-decoration: none;
+    color: #767676;
+}
+
+.eventsListBox a:hover {
+    color: white;
+}
+
+.eventsListBox span {
+    float: right;
+    font-size: 18pt;
+    position: absolute;
+    right: 0;
+    margin: 0 10px;
+    top: 0;
+    font-weight: normal;
+}
