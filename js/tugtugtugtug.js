@@ -7,12 +7,22 @@ var tug = angular.module('tugtugtugtug', []).run(function($rootScope) {
         "artist": "TSP",
         "title": "Cro Magnon Man",
         "url": "http://www.jplayer.org/audio/mp3/TSP-01-Cro_magnon_man.mp3",
-        "image": "/images/bg1.jpg"
-    },{
+        "image": "http://farm6.staticflickr.com/5018/5550180903_fede07b58d_b.jpg"
+    }, {
         "artist": "Miaow",
         "title": "The Separation",
         "url": "http://www.jplayer.org/audio/mp3/Miaow-05-The-separation.mp3",
-        "image": "/images/bg2.jpg"
+        "image": "http://userserve-ak.last.fm/serve/_/53168061/Miaow+joeandcath.jpg"
+    }, {
+        "artist": "Miaow",
+        "title": "Lismore",
+        "url": "http://www.jplayer.org/audio/mp3/Miaow-04-Lismore.mp3",
+        "image": "http://www.messandnoise.com/images/3014425/404x275-c.jpeg"
+    }, {
+        "artist": "Miaow",
+        "title": "Thin Ice",
+        "url": "http://www.jplayer.org/audio/mp3/Miaow-10-Thin-ice.mp3",
+        "image": "http://www.cloudberry-design.com/blog/cats.jpg"
     }];
 });
 
