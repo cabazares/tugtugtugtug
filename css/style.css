@@ -57,7 +57,7 @@ body {
 }
 
 .controlButton {
-    background-image: url(http://tugtugtugtug.localhost/images/controls.png);
+    background-image: url('/images/controls.png');
     background-repeat: no-repeat;
     width: 37px;
     height: 37px;
