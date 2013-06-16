@@ -179,3 +179,39 @@ tug.directive('tugCurrentSongArtist', function ($rootScope) {
         }
     };
 });
+
+
+tug.directive('tugPlayerControlsBox', function ($rootScope) {
+    return {
+        restrict: 'C',
+        link: function ($scope, element, attr) {
+            var volumeSlider = element.find(".volumeSlider");
+            var maxVolume = element.find(".volumeMax");
+            // slider event handler
+            var onChange = function(event, ui) {
+                var value = ui.value / 100;
+                $rootScope.player.jPlayer("volume", value);
+                var position = 3;
+                if (ui.value < 25) {
+                    position = 0;
+                } else if (ui.value < 50) {
+                    position = 1;
+                } else if (ui.value < 75) {
+                    position = 2;
+                }
+                maxVolume.css({
+                    'background-position': position * -16 + 'px 0px'
+                });
+            };
+            volumeSlider.slider({
+                value: 100,
+                slide: onChange,
+                change: onChange
+            });
+            // set max volume
+            maxVolume.on("click", function () {
+               volumeSlider.slider("value", 100).trigger('slide');
+            });
+        }
+    };
+});

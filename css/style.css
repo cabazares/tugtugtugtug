@@ -68,6 +68,32 @@ body {
     background-position: -44px 0px;
 }
 
+.tug-player-controls-box .volumeSlider {
+    position: absolute;
+    top: 12px;
+    width: 60px;
+    margin-left: 70px;
+    height: 10px;
+    background: none;
+}
+
+.tug-player-controls-box .volumeSlider .ui-slider-handle {
+    left: 100%;
+    height: 12px;
+    top: -2px;
+}
+
+.tug-player-controls-box .volumeMax {
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    background-image: url('/images/volume.png');
+    top: 10px;
+    left: 150px;
+    cursor: pointer;
+    background-position: -48px 0px;
+}
+
 .currentSongBox {
     position: absolute;
     bottom: 0px;
