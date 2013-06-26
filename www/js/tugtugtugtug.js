@@ -3,27 +3,12 @@ var tug = angular.module('tugtugtugtug', []).run(function($rootScope) {
     // setup default values
     $rootScope.currentTrack = null;
     $rootScope.isPlaying = false;
-    $rootScope.tracks = [{
-        "artist": "TSP",
-        "title": "Cro Magnon Man",
-        "url": "http://www.jplayer.org/audio/mp3/TSP-01-Cro_magnon_man.mp3",
-        "image": "http://farm6.staticflickr.com/5018/5550180903_fede07b58d_b.jpg"
-    }, {
-        "artist": "Miaow",
-        "title": "The Separation",
-        "url": "http://www.jplayer.org/audio/mp3/Miaow-05-The-separation.mp3",
-        "image": "http://userserve-ak.last.fm/serve/_/53168061/Miaow+joeandcath.jpg"
-    }, {
-        "artist": "Miaow",
-        "title": "Lismore",
-        "url": "http://www.jplayer.org/audio/mp3/Miaow-04-Lismore.mp3",
-        "image": "http://www.messandnoise.com/images/3014425/404x275-c.jpeg"
-    }, {
-        "artist": "Miaow",
-        "title": "Thin Ice",
-        "url": "http://www.jplayer.org/audio/mp3/Miaow-10-Thin-ice.mp3",
-        "image": "http://www.cloudberry-design.com/blog/cats.jpg"
-    }];
+    $rootScope.tracks = [];
+});
+
+tug.service('Config', function () {
+    this.apiURL = 'http://tugtugtugtug.backend';
+    this.maxTrials = 10;
 });
 
 tug.config([
@@ -41,14 +26,39 @@ tug.config([
 ]);
 
 // controllers
-tug.controller('MainCtrl', function($rootScope, $scope) {
-
-    $scope.test = "testers";
+tug.controller('MainCtrl', function(Config, $rootScope, $scope, Tracks) {
 
     // start playing on audio player load
     $rootScope.$on('audioPlayerInitialized', function(event) {
-        $rootScope.$broadcast('trackLoad', $rootScope.tracks[0]);
+        // get first track
+        $scope.getNextTrack().then(function (track) {
+            $rootScope.$broadcast('trackLoad', track);
+        });
     });
+
+    $scope.getNextTrack = function () {
+        var deferred = $.Deferred();
+        var tries = 0;
+        var handleTrack = function (track) {
+            // check if track not yet in tracks
+            var ids = $.map($rootScope.tracks, function (v) {
+                return v._id
+            });
+            if (ids.indexOf(track._id) == -1) {
+                // replace artist text
+                track.artist = track.artist.name;
+                $rootScope.tracks.push(track);
+                deferred.resolve(track);
+            } else if (tries >= Config.maxTrials) {
+                deferred.fail();
+            } else {
+                tries++;
+                Tracks.getRandomTrack().then(handleTrack);
+            }
+        };
+        Tracks.getRandomTrack().then(handleTrack);
+        return deferred;
+    };
 
     $scope.playTrack = function (time) {
         $rootScope.$broadcast('trackPlay', time);
@@ -62,9 +72,14 @@ tug.controller('MainCtrl', function($rootScope, $scope) {
     $scope.loadPrevTrack = function () {
         var tracks = $rootScope.tracks;
         var index = tracks.indexOf($rootScope.currentTrack);
-        if (index > 0) {
+        var getPrevious = function () {
             var track = $rootScope.tracks[--index];
             $rootScope.$broadcast('trackLoad', track);
+        };
+        if (index > 0) {
+            getPrevious();
+        } else {
+            $scope.getNextTrack().then(getPrevious);
         }
     };
 
@@ -72,13 +87,31 @@ tug.controller('MainCtrl', function($rootScope, $scope) {
     $scope.loadNextTrack = function () {
         var tracks = $rootScope.tracks;
         var index = tracks.indexOf($rootScope.currentTrack);
-        if (index < tracks.length - 1) {
+        var getNext = function () {
             var track = $rootScope.tracks[++index];
             $rootScope.$broadcast('trackLoad', track);
-        }
+        };
+        if (index < tracks.length - 1) {
+            getNext();
+        } else {
+            $scope.getNextTrack().then(getNext);
+        };
     };
 
 });
+
+tug.factory('Tracks', function($http, $q, Config) {
+    var nextTrackURL = Config.apiURL + "/nextTrack";
+    return {
+        getRandomTrack: function() {
+            return $.ajax({
+                'url': nextTrackURL,
+                'dataType': 'json'
+            });
+        }
+    }
+});
+
 
 // directives
 tug.directive('tugAudioPlayer', function ($rootScope) {
