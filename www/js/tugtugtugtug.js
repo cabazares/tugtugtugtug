@@ -202,6 +202,7 @@ tug.directive('tugCurrentSongArtist', function ($rootScope) {
                 element.animate({
                     "margin-top": -1 * (element.height() * 4)
                 }, {
+                    duration: 0,
                     complete: function () {
                         element.animate({
                             "margin-top": 0
