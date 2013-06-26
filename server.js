@@ -1,7 +1,6 @@
 var http = require('http');
 var url = require('url');
 var querystring = require('querystring');
-var chromelogger = require('chromelogger');
 
 
 function start(route, handlers) {
@@ -21,7 +20,6 @@ function start(route, handlers) {
         });
     }
     var server = http.createServer();
-    server.on('request', chromelogger.middleware);
     server.on('request', onRequest);
     server.listen(8888);
 
