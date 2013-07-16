@@ -103,6 +103,9 @@ body {
     vertical-align: middle;
     font-size: 22pt;
     line-height: 60px;
+    background-image: url('/images/tugtugtugtug_60h.png');
+    background-position: right;
+    background-repeat: no-repeat;
 }
 
 .currentSongArtist {
@@ -131,7 +134,7 @@ body {
     position: absolute;
     top: 50%;
     margin-top: -140px;
-    opacity: 0.2;
+    opacity: 0.8;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
