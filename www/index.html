@@ -4,17 +4,17 @@
     <meta charset="utf-8" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF8" />
     <title>tugtugtugtug</title>
-    <link rel="shortcut icon" href="images/favicon.png" type="image/png">
+    <link rel="shortcut icon" href="/images/favicon.png" type="image/png">
     <link href='http://fonts.googleapis.com/css?family=Pontano+Sans'
          rel="stylesheet" type="text/css">
-    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
     <script type="text/javascript"
         src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
     <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.1.4/angular.min.js"></script>
-    <script type="text/javascript" src="js/jquery.jplayer.min.js"></script>
-    <script type="text/javascript" src="js/tugtugtugtug.js"></script>
+    <script type="text/javascript" src="/js/jquery.jplayer.min.js"></script>
+    <script type="text/javascript" src="/js/tugtugtugtug.js"></script>
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -36,6 +36,16 @@
         <!-- current artist info -->
         <div class="currentSongArtist tug-current-song-artist">
             {{currentTrack.artist}}
+        </div>
+        <div class="shareBox">
+            <a href="#" class="facebookShare"
+              onclick="
+                window.open(
+                  'https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href), 
+                  'facebook-share-dialog',
+                  'width=626,height=436');
+                return false;">
+            </a>
         </div>
 
         <!-- current track info -->

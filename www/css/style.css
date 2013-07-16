@@ -116,6 +116,26 @@ body {
     right: 15px;
 }
 
+.shareBox {
+    position: absolute;
+    left: 80px;
+    top: 80px;
+}
+
+.shareBox .facebookShare {
+    background-image: url('/images/facebook.png');
+    background-position: right;
+    background-repeat: no-repeat;
+    width: 42px;
+    height: 42px;
+    position: absolute;
+    box-shadow: 0 0 6px white;
+}
+
+.shareBox .facebookShare:hover {
+    box-shadow: 0 0 15px white;
+}
+
 .currentSongArtist {
     min-width: 220px;
     background-color: black;

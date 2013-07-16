@@ -19,6 +19,9 @@ tug.config([
         $routeProvider.when('/', {
             controller: 'MainCtrl'
         });
+        $routeProvider.when('/t/:trackId', {
+            controller: 'MainCtrl'
+        });
 
         // set configurations
         $locationProvider.html5Mode(true);
@@ -26,17 +29,19 @@ tug.config([
 ]);
 
 // controllers
-tug.controller('MainCtrl', function(Config, $rootScope, $scope, Tracks) {
+tug.controller('MainCtrl', function(Config, $rootScope, $scope, $location,
+                                    $routeParams, Tracks) {
 
     // start playing on audio player load
     $rootScope.$on('audioPlayerInitialized', function(event) {
-        // get first track
-        $scope.getNextTrack().then(function (track) {
+        // if track id is set in the url else load random track
+        var request = $scope.getNextTrack($routeParams.trackId);
+        request.then(function (track) {
             $rootScope.$broadcast('trackLoad', track);
         });
     });
 
-    $scope.getNextTrack = function () {
+    $scope.getNextTrack = function (trackId) {
         var deferred = $.Deferred();
         var tries = 0;
         var handleTrack = function (track) {
@@ -45,6 +50,7 @@ tug.controller('MainCtrl', function(Config, $rootScope, $scope, Tracks) {
                 return v._id
             });
             if (ids.indexOf(track._id) == -1) {
+                track.artist_id = track.artist._id;
                 // replace artist text
                 track.artist = track.artist.name;
                 $rootScope.tracks.push(track);
@@ -56,7 +62,12 @@ tug.controller('MainCtrl', function(Config, $rootScope, $scope, Tracks) {
                 Tracks.getRandomTrack().then(handleTrack);
             }
         };
-        Tracks.getRandomTrack().then(handleTrack);
+        // get random track if trackID not set) {
+        if (trackId === undefined) {
+            Tracks.getRandomTrack().then(handleTrack);
+        } else {
+            Tracks.getTrack(trackId).then(handleTrack);
+        }
         return deferred;
     };
 
@@ -98,14 +109,27 @@ tug.controller('MainCtrl', function(Config, $rootScope, $scope, Tracks) {
         };
     };
 
+    $scope.$on('trackLoaded', function (event, curr, prev) {
+        // set location
+        $location.path("/t/" + curr._id);
+        // set document title
+        window.document.title = curr.artist + " - " + curr.title;
+    });
 });
 
 tug.factory('Tracks', function($http, $q, Config) {
     var nextTrackURL = Config.apiURL + "/nextTrack";
+    var getTrackURL = Config.apiURL + "/t/";
     return {
         getRandomTrack: function() {
             return $.ajax({
                 'url': nextTrackURL,
+                'dataType': 'json'
+            });
+        },
+        getTrack: function(trackId) {
+            return $.ajax({
+                'url': getTrackURL + trackId,
                 'dataType': 'json'
             });
         }
