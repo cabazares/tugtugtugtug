@@ -205,12 +205,17 @@ tug.directive('tugBackgroundImage', function ($rootScope) {
     return {
         restrict: 'C',
         link: function ($scope, element, attr) {
+            var defaultImage = "/images/tugtug_bg.jpg";
             var bgElem = element.find("#backgroundImage");
             // on track load
             $rootScope.$on('trackLoaded', function(event, track) {
+                var bgImage = defaultImage;
+                if (track.image) {
+                    bgImage = track.image;
+                }
                 bgElem.css({
-                    'background-image': 'url(\'' + track.image + '\')'
-                })
+                    'background-image': 'url(\'' + bgImage + '\')'
+                });
             });
         }
     };
