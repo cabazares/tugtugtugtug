@@ -5,9 +5,9 @@ var requestHandlers = require('./requestHandlers');
 
 var handlers = [
     ['/nextTrack', requestHandlers.nextTrack],
-    ['/.*/fbshare/?', requestHandlers.fbShare],
-    ['/t/.*/?', requestHandlers.tracks],
-    ['/a/.*/?', requestHandlers.artists],
+    ['/track/.*/?', requestHandlers.tracks],
+    ['/artist/.*/?', requestHandlers.artists],
+    ['/.*', requestHandlers.home],
 ]
 
 server.start(router.route, handlers);

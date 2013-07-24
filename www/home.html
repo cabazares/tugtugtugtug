@@ -4,16 +4,20 @@
     <meta charset="utf-8" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF8" />
     <title>tugtugtugtug</title>
+
+    <meta property="og:image" content="{OG_IMAGE}"/>
+    <meta property="og:url" content="{OG_URL}"/>
+    <meta property="og:title" content="{OG_TITLE}"/>
+
     <link rel="shortcut icon" href="/images/favicon.png" type="image/png">
 
     <link href='http://fonts.googleapis.com/css?family=Pontano+Sans'
          rel="stylesheet" type="text/css">
     <link href="/css/style.css" rel="stylesheet" type="text/css">
-    <script type="text/javascript"
-        src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
-    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.1.4/angular.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <link rel="stylesheet" href="/css/jquery-ui.css" />
+    <script type="text/javascript" src="/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/js/angular.min.js"></script>
     <script type="text/javascript" src="/js/jquery.jplayer.min.js"></script>
     <script type="text/javascript" src="/js/tugtugtugtug.js"></script>
     <script>
@@ -43,8 +47,7 @@
               onclick="
                 window.open(
                   'https://www.facebook.com/sharer/sharer.php?u=' +
-                    encodeURIComponent('http://backend.tugtugtugtug.com' +
-                                       location.pathname + '/fbshare'),
+                    encodeURIComponent(location.href),
                   'facebook-share-dialog',
                   'width=626,height=436');
                 return false;">
