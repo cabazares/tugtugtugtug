@@ -164,6 +164,10 @@ tug.directive('tugAudioPlayer', function ($rootScope) {
                     // play next song
                     $scope.loadNextTrack();
                 },
+                timeupdate: function(event) {
+                    $rootScope.$broadcast('audioPlayerTimeUpdate', event);
+                    $scope.$apply();
+                },
                 swfPath: 'js',
                 cssSelectorAncestor: '.playerControlsBox',
                 supplied: 'mp3',
@@ -248,6 +252,7 @@ tug.directive('tugPlayerControlsBox', function ($rootScope) {
         restrict: 'C',
         link: function ($scope, element, attr) {
             var volumeSlider = element.find(".volumeSlider");
+            var seekSlider = element.find(".seekSlider");
             var maxVolume = element.find(".volumeMax");
             // slider event handler
             var onChange = function(event, ui) {
@@ -273,6 +278,42 @@ tug.directive('tugPlayerControlsBox', function ($rootScope) {
             // set max volume
             maxVolume.on("click", function () {
                volumeSlider.slider("value", 100).trigger('slide');
+            });
+
+
+            var playerData = $rootScope.player.data("jPlayer");
+            seekSlider.slider({
+                max: 100,
+                range: "min",
+                step: 0.1,
+                value : 0,
+                slide: function(event, ui) {
+                    var sp = playerData.status.seekPercent;
+                    if (sp > 0) {
+                        // Move the play-head to the value and
+                        // factor in the seek percent.
+                        $rootScope.player.jPlayer("playHead",
+                                                   ui.value * (100 / sp));
+                    } else {
+                        // Create a timeout to reset this slider to zero.
+                        setTimeout(function() {
+                            seekSlider.slider("value", 0);
+                        }, 0);
+                    }
+                }
+            });
+
+            var win = $(window);
+            var seekBarMargin = 24;
+            var resizeSlider = function () {
+                seekSlider.css('width', win.width() - seekBarMargin);
+            };
+            win.on('resize', resizeSlider);
+            resizeSlider();
+
+            $rootScope.$on('audioPlayerTimeUpdate', function(event, status) {
+                var value = status.jPlayer.status.currentPercentAbsolute;
+                seekSlider.slider("value", value);
             });
         }
     };

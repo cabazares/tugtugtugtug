@@ -94,6 +94,33 @@ body {
     background-position: -48px 0px;
 }
 
+.tug-player-controls-box .seekSlider {
+    position: absolute;
+    margin-top: -58px;
+    margin-left: -9px;
+    height: 6px;
+    border-radius: 0;
+}
+
+.tug-player-controls-box .seekSlider .ui-slider-handle {
+    height: 9px;
+    background-color: #555;
+    background-image: none;
+    border: 0px solid black;
+    border-radius: 0;
+    margin-top: 3px;
+}
+
+.tug-player-controls-box .seekSlider .ui.slider-range{
+    border-radius: 0;
+    height: 9px;
+    margin: -2px -1px;
+}
+
+.tug-player-controls-box .seekSlider .ui-slider-handle.ui-state-hover {
+    background-color: #AAA;
+}
+
 .currentSongBox {
     position: absolute;
     bottom: 0px;
