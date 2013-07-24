@@ -7,7 +7,6 @@ var tug = angular.module('tugtugtugtug', []).run(function($rootScope) {
 });
 
 tug.service('Config', function () {
-    this.apiURL = 'http://tugtugtugtug.backend';
     this.maxTrials = 10;
 });
 
@@ -117,9 +116,9 @@ tug.controller('MainCtrl', function(Config, $rootScope, $scope, $location,
     });
 });
 
-tug.factory('Tracks', function($http, $q, Config) {
-    var nextTrackURL = Config.apiURL + "/nextTrack";
-    var getTrackURL = Config.apiURL + "/t/";
+tug.factory('Tracks', function(Config) {
+    var nextTrackURL = "/nextTrack";
+    var getTrackURL = "/track/";
     return {
         getRandomTrack: function() {
             return $.ajax({

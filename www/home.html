@@ -4,6 +4,11 @@
     <meta charset="utf-8" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF8" />
     <title>tugtugtugtug</title>
+
+    <meta property="og:image" content="{OG_IMAGE}"/>
+    <meta property="og:url" content="{OG_URL}"/>
+    <meta property="og:title" content="{OG_TITLE}"/>
+
     <link rel="shortcut icon" href="/images/favicon.png" type="image/png">
 
     <link href='http://fonts.googleapis.com/css?family=Pontano+Sans'
@@ -42,8 +47,7 @@
               onclick="
                 window.open(
                   'https://www.facebook.com/sharer/sharer.php?u=' +
-                    encodeURIComponent('http://backend.tugtugtugtug.com' +
-                                       location.pathname + '/fbshare'),
+                    encodeURIComponent(location.href),
                   'facebook-share-dialog',
                   'width=626,height=436');
                 return false;">

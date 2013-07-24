@@ -24,7 +24,7 @@ var respondHTML = function (data) {
 
 function artists(obj) {
     response = obj.response;
-    var artist = parsePath(obj.path, 'a');
+    var artist = parsePath(obj.path, 'artist');
     db.Artist.findOne({
         '_id': artist
     }, function (err, artist) {
@@ -34,7 +34,7 @@ function artists(obj) {
 
 function tracks(obj) {
     response = obj.response;
-    var track = parsePath(obj.path, "t");
+    var track = parsePath(obj.path, "track");
     db.Track.findOne({
         '_id': track
     }).populate('artist').findOne(function (err, track) {
@@ -49,22 +49,31 @@ function nextTrack(obj) {
     });
 }
 
-function fbShare(obj) {
-    var filename = "./www/fbshare.html";
+function home(obj) {
+    var URL = "http://www.tugtugtugtug.com";
+    var OG_IMAGE = URL + "/images/tugtug_640.jpg";
+    var OG_TITLE = "Tugtugtugtug";
+    var filename = "./www/home.html";
     response = obj.response;
 
     var trackId = parsePath(obj.path, "t");
     fs.readFile(filename, 'utf8', function(err, data) {
         if (err) throw err;
+        // retrieve track
         db.Track.findOne({
             '_id': trackId
         }).populate('artist').findOne(function (err, track) {
-            track = JSON.parse(JSON.stringify(track))
-            data = data.replace('{URL}', obj.request.url)
-            data = data.replace('{ARTIST}', track.artist.name);
-            data = data.replace('{TITLE}', track.title);
-            data = data.replace('{REDIRECT_URL}',
-                                obj.request.url.replace('/fbshare', ''))
+            // populate html
+            data = data.replace('{OG_IMAGE}', OG_IMAGE);
+            data = data.replace('{OG_URL}', URL + obj.request.url)
+            if (track !== undefined) {
+                track = JSON.parse(JSON.stringify(track));
+                var og_title = track.artist.name + " - " + track.title;
+                data = data.replace('{OG_TITLE}', og_title);
+            } else {
+                data = data.replace('{OG_TITLE}', OG_TITLE);
+            }
+            // respond
             respondHTML(data);
         });
     });
@@ -75,5 +84,4 @@ exports.tracks = tracks;
 exports.artists = artists;
 exports.nextTrack = nextTrack;
 
-exports.fbShare = fbShare;
-
+exports.home = home;
