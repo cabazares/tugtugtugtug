@@ -175,7 +175,7 @@ body {
 
 
 .prevNextButton {
-    width: 32px;
+    width: 40px;
     height: 200px;
     display: block;
     text-decoration: none;
@@ -196,14 +196,19 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .prevNextButton.nextTrack {
     right: 0px;
+    background-image: url('/images/ff.png');
 }
 
 .prevNextButton.prevTrack {
     left: 0px;
+    background-image: url('/images/rw.png');
 }
 
 .eventsListBox {
