@@ -207,6 +207,7 @@ body {
 }
 
 .eventsListBox {
+    display:none;
     min-width: 180px;
     background-color: black;
     position: absolute;
