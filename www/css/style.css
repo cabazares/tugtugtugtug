@@ -201,6 +201,10 @@ body {
     background-position: center;
 }
 
+.prevNextButton:hover {
+    opacity: 1;
+}
+
 .prevNextButton.nextTrack {
     right: 0px;
     background-image: url('/images/ff.png');
