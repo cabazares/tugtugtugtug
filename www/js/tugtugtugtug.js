@@ -30,6 +30,7 @@ tug.config([
 // controllers
 tug.controller('MainCtrl', function(Config, $rootScope, $scope, $location,
                                     $routeParams, Tracks) {
+    $scope.isBusy = false;
 
     // start playing on audio player load
     $rootScope.$on('audioPlayerInitialized', function(event) {
@@ -38,11 +39,33 @@ tug.controller('MainCtrl', function(Config, $rootScope, $scope, $location,
         request.then(function (track) {
             $rootScope.$broadcast('trackLoad', track);
         });
+        // initialize spinner
+        var opts = {
+          lines: 9,
+          length: 0,
+          width: 7,
+          radius: 10,
+          corners: 1,
+          rotate: 17,
+          direction: 1,
+          color: '#FFF',
+          speed: 2.2,
+          trail: 100,
+          shadow: false,
+          hwaccel: true,
+          className: 'spinner',
+          zIndex: 2e9,
+          top: 'auto',
+          left: 'auto'
+        };
+        var target = document.getElementById('loading_throbber');
+        var spinner = new Spinner(opts).spin(target);
     });
 
     $scope.getNextTrack = function (trackId) {
         var deferred = $.Deferred();
         var tries = 0;
+        $scope.isBusy = true;
         var handleTrack = function (track) {
             // check if track not yet in tracks
             var ids = $.map($rootScope.tracks, function (v) {
@@ -52,7 +75,6 @@ tug.controller('MainCtrl', function(Config, $rootScope, $scope, $location,
                 track.artist_id = track.artist._id;
                 // replace artist text
                 track.artist = track.artist.name;
-                $rootScope.tracks.push(track);
                 deferred.resolve(track);
             } else if (tries >= Config.maxTrials) {
                 deferred.fail();
@@ -60,6 +82,7 @@ tug.controller('MainCtrl', function(Config, $rootScope, $scope, $location,
                 tries++;
                 Tracks.getRandomTrack().then(handleTrack);
             }
+            $scope.isBusy = false;
         };
         // get random track if trackID not set) {
         if (trackId === undefined) {
@@ -82,8 +105,12 @@ tug.controller('MainCtrl', function(Config, $rootScope, $scope, $location,
     $scope.loadPrevTrack = function () {
         var tracks = $rootScope.tracks;
         var index = tracks.indexOf($rootScope.currentTrack);
-        var getPrevious = function () {
-            var track = $rootScope.tracks[--index];
+        var getPrevious = function (track) {
+            if (track !== undefined) {
+                $rootScope.tracks.unshift(track);
+            } else {
+                track = $rootScope.tracks[--index];
+            }
             $rootScope.$broadcast('trackLoad', track);
         };
         if (index > 0) {
@@ -97,8 +124,12 @@ tug.controller('MainCtrl', function(Config, $rootScope, $scope, $location,
     $scope.loadNextTrack = function () {
         var tracks = $rootScope.tracks;
         var index = tracks.indexOf($rootScope.currentTrack);
-        var getNext = function () {
-            var track = $rootScope.tracks[++index];
+        var getNext = function (track) {
+            if (track !== undefined) {
+                $rootScope.tracks.push(track);
+            } else {
+                track = $rootScope.tracks[++index];
+            }
             $rootScope.$broadcast('trackLoad', track);
         };
         if (index < tracks.length - 1) {

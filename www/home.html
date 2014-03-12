@@ -19,6 +19,7 @@
     <script type="text/javascript" src="/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="/js/angular.min.js"></script>
     <script type="text/javascript" src="/js/jquery.jplayer.min.js"></script>
+    <script type="text/javascript" src="/js/spin.min.js"></script>
     <script type="text/javascript" src="/js/tugtugtugtug.js"></script>
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -87,6 +88,7 @@
 
         <!-- general content-->
         <ng-view></ng-view>
+        <div ng-show="isBusy" id="loading_throbber"></div>
     </div>
 </body>
 </html>
