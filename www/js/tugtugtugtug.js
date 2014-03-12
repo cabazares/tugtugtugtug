@@ -122,7 +122,7 @@ tug.factory('Tracks', function(Config) {
     return {
         getRandomTrack: function() {
             return $.ajax({
-                'url': nextTrackURL,
+                'url': nextTrackURL + "?rand=" + Math.random(),
                 'dataType': 'json'
             });
         },
@@ -166,7 +166,6 @@ tug.directive('tugAudioPlayer', function ($rootScope) {
                 },
                 timeupdate: function(event) {
                     $rootScope.$broadcast('audioPlayerTimeUpdate', event);
-                    $scope.$apply();
                 },
                 swfPath: 'js',
                 cssSelectorAncestor: '.playerControlsBox',
